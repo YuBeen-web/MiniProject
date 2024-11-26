@@ -36,7 +36,7 @@ public class MemberJoinController {
 		return "thymeleaf/memberJoin/userForm";
 	}
 	@PostMapping("userWrite")
-	public String user(@Validated UserCommand userCommand, BindingResult result) {
+	public String user(@Validated UserCommand userCommand, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "thymeleaf/memberJoin/userForm";
 		}

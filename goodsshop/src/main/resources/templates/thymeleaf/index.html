@@ -25,11 +25,25 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>LOGO</b></h3>
   </div>
-  <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
-  	<form action="/login/login" method="post">
+  <div th:if="${session.auth != null}" class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
+ 	<ul>
+ 		<th:block th:if="${session.auth.grade == 'mem'}">
+ 		<li>내정보 보기</li>
+ 		<li>장바구니</li>
+ 		<li>관심목록</li>
+ 		<li>주문목록</li>
+ 		</th:block>
+ 		
+ 		<li>로그아웃</li>
+ 	</ul>
+  </div>
+  <div th:if="${session.auth == null}" class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
+  	<form action="/login/login" method="post" th:object="${loginCommand}">
   	<table align="center">
-  		<tr><td><input type="text" name="userId"/></td></tr>
-  		<tr><td><input type="password" name="userPw"/></td></tr>
+  		<tr><td><input type="text" name="userId"/><br/>
+  				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span></td></tr>
+  		<tr><td><input type="password" name="userPw"/><br/>
+  				<span th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span></td></tr>
   		<tr><th><input type="submit" value="로그인"/></th></tr>
   	</table>
   	</form>

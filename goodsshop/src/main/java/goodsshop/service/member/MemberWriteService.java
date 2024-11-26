@@ -24,8 +24,6 @@ public class MemberWriteService {
 		
 		dto.setMemberPost(userCommand.getMemberPost());
 		
-		dto.setMemberNum(userCommand.getMemberNum());
-		
 		memberRepository.memberInsert(dto);
 	}
 }

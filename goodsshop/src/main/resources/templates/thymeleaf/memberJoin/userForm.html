@@ -6,11 +6,12 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-
+<script type="text/javascript" src="/static/js/check.js"></script>
 </head>
 <body>
 <div align="center">회원가입 양식</div>
 <form action="userWrite" method="post" th:object="${userCommand}">
+<input type="hidden" name="memberNum" th:value="${userCommand.memberNum}" readonly="readonly"/>
 <table width="600" border="1" align="center">
 	<tr><td>회원아이디</td>
 		<td><input type="text" name="memberId" id="userId" th:value="${userCommand.memberId}">

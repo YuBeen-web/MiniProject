@@ -9,7 +9,8 @@ import goodsshop.repository.LoginRepository;
 public class IdcheckService {
 	@Autowired
 	LoginRepository loginRepository;
-	public int execute(String userId) {
-		return loginRepository.idcheckSelectOne(userId);
+	public Integer execute(String userId) {
+		int result = loginRepository.idcheckSelectOne(userId);
+		return result;
 	}
 }
