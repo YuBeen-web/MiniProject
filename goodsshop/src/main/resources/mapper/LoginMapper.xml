@@ -6,9 +6,12 @@
 	<select id="idcheckSelectOne" parameterType="string" resultType="integer">
 		select count(member_id) from members where member_id = #{userId} 
 	</select>
+	<select id="empIdCheckSelectOne" parameterType="string" resultType="integer">
+		select count(emp_id) from employees where emp_id = #{userId}
+	</select>
 	
 	<resultMap type="auth" id="authResultMap">
-		<result column="member_id" property="uesrId" jdbcType="VARCHAR"/>
+		<result column="member_id" property="userId" jdbcType="VARCHAR"/>
 		<result column="member_pw" property="userPw" jdbcType="VARCHAR"/>
 		<result column="member_name" property="userName" jdbcType="VARCHAR"/>
 		<result column="member_email" property="userEmail" jdbcType="VARCHAR"/>
@@ -18,5 +21,9 @@
 		select member_id , member_pw, member_name, member_email , 'mem' as grade
 		from members
 		where member_id = #{userId}
+		union
+		select emp_id, emp_pw, emp_name, emp_email, 'emp' as grade
+		from employees
+		where emp_id = #{userId}
 	</select>
 </mapper>

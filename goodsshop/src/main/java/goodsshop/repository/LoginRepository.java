@@ -18,6 +18,11 @@ public class LoginRepository {
 		return sqlSession.selectOne(statement, userId);
 	}
 	
+	public Integer empIdCheckSelectOne(String userId) {
+		statement = namespace + ".empIdCheckSelectOne";
+		return sqlSession.selectOne(statement, userId);
+	}
+	
 	public AuthInfoDTO loginSelectOne(String userId) {
 		statement = namespace + ".loginSelectOne";
 		return sqlSession.selectOne(statement, userId);

@@ -20,7 +20,7 @@ public class UserLoginService {
 		AuthInfoDTO auth = loginRepository.loginSelectOne(loginCommand.getUserId());
 		if(auth != null) {
 			System.out.println("아이디가 존재합니다.");
-			if(passwordEncoder.matches(loginCommand.getUserPw(), auth.getUserPw())) {
+			if(passwordEncoder.matches(loginCommand.getUserPw(), auth.getUserPw())) { //passwordEncoder.matches(loginCommand.getUserPw(), auth.getUserPw())
 				System.out.println("비밀번호가 일치합니다.");
 				session.setAttribute("auth", auth);
 			}else{
