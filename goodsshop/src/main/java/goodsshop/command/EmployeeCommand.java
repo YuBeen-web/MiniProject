@@ -1,5 +1,6 @@
 package goodsshop.command;
 
+import java.io.File;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,7 +43,7 @@ public class EmployeeCommand {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date empHireDate;
 	
-	String empImage;
+	File empImage;
 	
 	public boolean isEmpPwEqualEmpPwCon() {
 		return empPw.equals(empPwCon);

@@ -6,12 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import goodsshop.command.EmployeeCommand;
 import goodsshop.service.AutoNumService;
+import goodsshop.service.employee.EmployeeDeleteService;
 import goodsshop.service.employee.EmployeeDetailService;
 import goodsshop.service.employee.EmployeeHireService;
 import goodsshop.service.employee.EmployeeListService;
+import goodsshop.service.employee.EmployeeUpdateService;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("employee")
@@ -24,10 +28,17 @@ public class EmployeeController {
 	AutoNumService autoNumSerivce;
 	@Autowired
 	EmployeeDetailService employeeDetailService;
+	@Autowired
+	EmployeeUpdateService employeeUpdateService;
+	@Autowired
+	EmployeeDeleteService employeeDeleteService;
 	
 	@GetMapping("employeeList")
-	public String employeeList(Model model) {
-		employeeListService.execute(model);
+	public String employeeList(
+			@RequestParam(value="page", required = false, defaultValue = "1") int page,
+			@RequestParam(value="searchWord", required = false) String searchWord,
+			Model model) {
+		employeeListService.execute(searchWord, page, model);
 		return "thymeleaf/employee/employeeList";
 	}
 	
@@ -51,4 +62,23 @@ public class EmployeeController {
 		employeeDetailService.execute(empNum, model);
 		return "thymeleaf/employee/employeeInfo";
 	}
+	
+	@GetMapping("employeeModify")
+	public String employeeModify(String empNum, Model model) {
+		employeeDetailService.execute(empNum, model);
+		return "thymeleaf/employee/employeeUpdate";
+	}
+	
+	@PostMapping("employeeModify")
+	public String employeeModify(EmployeeCommand employeeCommand) {
+		employeeUpdateService.execute(employeeCommand);
+		return "redirect:employeeDetail?empNum="+employeeCommand.getEmpNum();
+	}
+	
+	@GetMapping("employeeDelete")
+	public String employeeDelete(String empNum) {
+		employeeDeleteService.execute(empNum);
+		return "redirect:employeeList";
+	}
+	
 }

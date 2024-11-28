@@ -8,8 +8,19 @@
 		, EMP_EMAIL, EMP_HIRE_DATE, EMP_IMAGE
 	</sql>
 
-	<select id="employeeAllSelect" resultType="employee">
-		select <include refid="employeeColumns"/> from employees
+	<select id="employeeAllSelect" resultType="employee" parameterType="startEndPageDTO">
+		select * from (
+			select row_number() over (order by emp_num) as rn, 
+				<include refid="employeeColumns"/> 
+			from employees
+			<where>
+				<if test="searchWord != null">
+					emp_name like '%' || #{searchWord} || '%'
+					or emp_num like '%' || #{searchWord} || '%'
+				</if>
+			</where>
+		)
+		where rn between #{startRow} and #{endRow}
 	</select>
 	
 	<insert id="employeeInsert" parameterType="employee">
@@ -17,4 +28,36 @@
 		values (#{empNum}, #{empId}, #{empPw}, #{empName}, #{empAddr}, #{empAddrDetail}, #{empPost}
 				, #{empPhone}, #{empJumin}, #{empEmail}, sysdate, #{empImage})
 	</insert>
+	
+	<select id="employeeOneSelect" parameterType="string" resultType="employee">
+		select <include refid="employeeColumns"/> from employees
+		where emp_num = #{empNum}
+	</select>
+	
+	<update id="employeeUpdate" parameterType="employee">
+		update employees
+		set emp_id = #{empId}
+			,emp_name = #{empName}
+			,emp_addr = #{empAddr}
+			,emp_addr_detail = #{empAddrDetail}
+			,EMP_POST = #{empPost}
+			,EMP_PHONE = #{empPhone}
+			,EMP_EMAIL = #{empEmail}
+			,EMP_IMAGE = #{empImage}
+		where emp_num = #{empNum}
+	</update>
+	
+	<delete id="employeeDelete" parameterType="string">
+		delete from employees where emp_num = #{empNum}
+	</delete>
+	
+	<select id="employeeCount" resultType="integer" parameterType="string">
+		select count(*) from employees
+		<if test='searchWord != null'>
+			<where>
+				emp_name like '%' || #{searchWord} || '%'
+				or emp_num like '%' || #{searchWord} || '%'
+			</where>
+		</if>
+	</select>
 </mapper>

@@ -28,6 +28,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	</header>
 	
 	<div class="w3-display-container w3-container">
+		<form action="employeeList" method="get" align="center">
+					검색 : 
+					<input type="search" name="searchWord" size="55" th:value="${searchWord}"/>
+					<input type="submit" value="검색"/>
+		</form>
+		<br/>
 		<table border="1" width="500" align="center" >
 			<tr><th>직원번호</th><th>이름</th><th>연락처</th><th>입사일</th></tr>
 			<tr th:each="dto : ${list}">
@@ -35,8 +41,32 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 				<td><a th:href="|employeeDetail?empNum=${dto.empNum}|">[[${dto.empName}]]</a></td>
 				<td>[[${dto.empPhone}]]</td>
 				<td>[[${#dates.format(dto.empHireDate,'yyyy-MM-dd')}]]</td></tr>
+		
+			<tr>
+				<th colspan="4">
+					<th:block th:if="${page <= 1}">
+						[이전]
+					</th:block>
+					<th:block th:if="${page > 1}">
+						<a th:href="@{employeeList(page=${page-1},searchWord=${searchWord})}">[이전]</a>
+					</th:block>
+					<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+						<a th:href="@{employeeList(page=${i},searchWord=${searchWord})}">[[${i}]]</a>
+					</th:block>
+					<th:block th:if="${page >= maxPage}"> 
+						[다음]
+					</th:block>
+					<th:block th:if="${page < maxPage}">
+						<a th:href="@{employeeList(page=${page+1},searchWord=${searchWord})}">[다음]</a>
+					</th:block>
+				</th>
+			</tr>
 		</table>
 	</div>
+	
+	<footer class="w3-container w3-xlarge">
+		<p class="w3-center"><a href="../">홈으로</a></p>
+	</footer>
 </div>
 
 
