@@ -45,4 +45,9 @@ public class EmployeeRepository {
 		statement = namespace + ".employeeCount";
 		return sqlSession.selectOne(statement, searchWord);
 	}
+	
+	public String getEmpNum(String empId) {
+		statement = namespace + ".getEmpNum";
+		return sqlSession.selectOne(statement, empId);
+	}
 }

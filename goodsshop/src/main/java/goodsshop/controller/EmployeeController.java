@@ -3,6 +3,8 @@ package goodsshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,6 @@ import goodsshop.service.employee.EmployeeDetailService;
 import goodsshop.service.employee.EmployeeHireService;
 import goodsshop.service.employee.EmployeeListService;
 import goodsshop.service.employee.EmployeeUpdateService;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("employee")
@@ -52,7 +53,10 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("employeeHire")
-	public String employeeHire(EmployeeCommand employeeCommand) {
+	public String employeeHire(@Validated EmployeeCommand employeeCommand, BindingResult result) {
+		if(result.hasErrors()) {
+			return "thymeleaf/employee/employeeForm";
+		}
 		employeeHireService.execute(employeeCommand);
 		return "redirect:employeeList";
 	}

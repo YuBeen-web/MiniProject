@@ -1,9 +1,9 @@
 package goodsshop.command;
 
-import java.io.File;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -43,7 +43,7 @@ public class EmployeeCommand {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date empHireDate;
 	
-	File empImage;
+	MultipartFile empImage;
 	
 	public boolean isEmpPwEqualEmpPwCon() {
 		return empPw.equals(empPwCon);

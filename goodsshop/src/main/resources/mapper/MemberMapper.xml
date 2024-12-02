@@ -14,4 +14,34 @@
 				, #{memberAddrDetail}, #{memberPost}, sysdate, #{gender}, #{memberPhone}
 				, #{memberEmail}, #{memberBirth}, 0)
 	</insert>
+	
+	<select id="memberAllSelect" parameterType="startEndPageDTO" resultType="member">
+		select * from (
+			select row_number() over (order by member_num) as rn,
+				<include refid="memberColumns"/>
+			from members
+			<where>
+				<if test="searchWord != null">
+					member_name like '%' || #{searchWord} || '%'
+					or member_num like '%' || #{searchWord} || '%'
+				</if>
+			</where>
+		)
+		where rn between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="memberCount" parameterType="string" resultType="integer">
+		select count(*) from members
+		<if test='searchWord != null'>
+			<where>
+				member_name like '%' || #{searchWord} || '%'
+				or member_num like '%' || #{searchWord} || '%'
+			</where>
+		</if>
+	</select>
+	
+	<select id="memberOneSelect" parameterType="string" resultType="member">
+		select <include refid="memberColumns"/> from members
+		where member_num = #{memberNum}
+	</select>
 </mapper>

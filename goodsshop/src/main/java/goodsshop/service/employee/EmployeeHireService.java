@@ -32,13 +32,13 @@ public class EmployeeHireService {
 		
 		/////파일 추가
 		// 경로
-		URL resource = getClass().getClassLoader().getResource("/static/upload");
+		URL resource = getClass().getClassLoader().getResource("static/upload");
 		System.out.println("resource : " + resource);
 		String filrDir = resource.getFile();
 		
 		// 이미지
-		File mf = employeeCommand.getEmpImage();
-		String originalFile = ((MultipartFile) mf).getOriginalFilename();
+		MultipartFile mf = employeeCommand.getEmpImage();
+		String originalFile = mf.getOriginalFilename();
 		String extension = originalFile.substring(originalFile.lastIndexOf("."));
 		
 		//이름짓기

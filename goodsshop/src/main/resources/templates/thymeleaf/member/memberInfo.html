@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>직원 수정</title>
+<title>회워 상세페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
@@ -26,60 +26,54 @@ body, h1, h2, h3, h4, h5, h6, .w3-wide {
 	<div class="w3-bar-item w3-padding-24 w3-wide w3-center">직원 상세보기
 	</div>
 </header>
-
 <div class="w3-main" style="margin-left: 250px">
 	<div class="w3-large" style="margin-top: 83px"></div>
 
 	<header class="w3-container w3-xlarge">
 		<p class="w3-center">
-			<a th:href="|employeeDetail?empNum=${employeeCommand.empNum}|">뒤로가기</a>
+			<a href="memberList">뒤로가기</a>
+		</p>
+		<p class="w3-center">
+			<a th:href="|memberModify?memberNum=${memberCommand.memberNum}|">수정</a> | 
+			<a th:href="|memberDelete?memberNum=${memberCommand.memberNum}|">삭제</a>
 		</p>
 	</header>
 
 	<div class="w3-display-container w3-container">
-	<form action="employeeModify" method="post" th:object="${employeeCommand}">
-		<table border="1" width="600" align="center">
+		<table border="1" width="500" align="center">
 			<tr>
 				<th>직원번호</th>
-				<td><input type="text" name="empNum" th:value="${employeeCommand.empNum}" readonly="readonly"/></td>
+				<td>[[${memberCommand.memberNum}]]</td>
 			</tr>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="empId" th:value="${employeeCommand.empId}"/></td>
+				<td>[[${memberCommand.memberId}]]</td>
 			</tr>
 			<tr>
 				<th>성명</th>
-				<td><input type="text" name="empName" th:value="${employeeCommand.empName}"/></td>
+				<td>[[${memberCommand.memberName}]]</td>
 			</tr>
 			<tr>
 				<th>주소</th>
-				<td><input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"/></td>
+				<td>[[${memberCommand.memberAddr}]]</td>
 			</tr>
 			<tr>
 				<th>상세주소</th>
-				<td><input type="text" name="empAddrDetail" th:value="${employeeCommand.empAddrDetail}"/></td>
+				<td>[[${memberCommand.memberAddrDetail}]]</td>
 			</tr>
 			<tr>
 				<th>우편번호</th>
-				<td><input type="text" name="empPost" th:value="${employeeCommand.empPost}"/></td>
+				<td>[[${memberCommand.memberPost}]]</td>
 			</tr>
 			<tr>
 				<th>연락처</th>
-				<td><input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/></td>
+				<td>[[${memberCommand.memberPhone}]]</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><input type="email" name="empEmail" th:value="${employeeCommand.empEmail}"/></td>
-			</tr>
-			<tr>
-				<th>프로필 사진</th>
-				<td><input type="file" name="empImage" th:value="${employeeCommand.empImage}"/></td>
-			</tr>
-			<tr>
-				<th colspan="2"><input type="submit" value="수정완료"/></th>
+				<td>[[${memberCommand.memberEmail}]]</td>
 			</tr>
 		</table>
-	</form>
 	</div>
 </div>
 </body>

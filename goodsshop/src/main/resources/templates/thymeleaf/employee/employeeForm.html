@@ -31,7 +31,7 @@ $(function(){
 				if(result == 200){
 					location.href="employeeList";
 				}else{
-					$("#employeeForm").html(result);
+					location.href="employeeList";
 				}
 			},
 			error : function(){
@@ -58,7 +58,7 @@ $(function(){
 	<p class="w3-center"><a href="employeeList">뒤로가기</a></p>
 </header>
 
-<div class="w3-display-container w3-container">
+<div class="w3-display-container w3-container" id="employeeForm">
 <form action="employeeHire" method="post" id="frm" th:object="${employeeCommand}">
 <table width="600" border="1" align="center">
 <input type="hidden" name="empNum" th:value="${employeeCommand.empNum}" readonly="readonly"/>
