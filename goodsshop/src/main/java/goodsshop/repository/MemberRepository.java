@@ -35,4 +35,14 @@ public class MemberRepository {
 		statement = namespace + ".memberOneSelect";
 		return sqlSession.selectOne(statement, memberNum);
 	}
+	
+	public int memberUpdate(MemberDTO dto) {
+		statement = namespace + ".memberUpdate";
+		return sqlSession.update(statement, dto);
+	}
+	
+	public int memberDelete(String memberNum) {
+		statement = namespace + ".memberDelete";
+		return sqlSession.delete(statement, memberNum);
+	}
 }

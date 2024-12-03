@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import goodsshop.command.MemberCommand;
+import goodsshop.service.member.MemberDeleteService;
 import goodsshop.service.member.MemberDetailService;
 import goodsshop.service.member.MemberListService;
 import goodsshop.service.member.MemberUpdateService;
@@ -22,6 +23,8 @@ public class MemberController {
 	MemberDetailService memberDetailService;
 	@Autowired
 	MemberUpdateService memberUpdateService;
+	@Autowired
+	MemberDeleteService memberDeleteService;
 	
 	@GetMapping("memberList")
 	public String memberList(
@@ -48,5 +51,11 @@ public class MemberController {
 	public String memberModify(MemberCommand memberCommand) {
 		memberUpdateService.execute(memberCommand);
 		return "redirect:memberDetail?memberNum="+memberCommand.getMemberNum();
+	}
+	
+	@GetMapping("memberDelete")
+	public String memberDelete(String memberNum) {
+		memberDeleteService.execute(memberNum);
+		return "redirect:memberList";
 	}
 }

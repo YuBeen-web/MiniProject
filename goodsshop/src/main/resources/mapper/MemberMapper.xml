@@ -44,4 +44,20 @@
 		select <include refid="memberColumns"/> from members
 		where member_num = #{memberNum}
 	</select>
+	
+	<update id="memberUpdate" parameterType="member">
+		update members
+		set MEMBER_NAME = #{memberName},
+			MEMBER_ID = #{memberId},
+			MEMBER_ADDR = #{memberAddr},
+			MEMBER_ADDR_DETAIL = #{memberAddrDetail},
+			MEMBER_POST = #{memberPost},
+			MEMBER_PHONE = #{memberPhone},
+			MEMBER_EMAIL = #{memberEmail}
+		where member_num = #{memberNum}
+	</update>
+	
+	<delete id="memberDelete" parameterType="string">
+		delete from members where member_num = #{memberNum}
+	</delete>
 </mapper>

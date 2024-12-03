@@ -28,7 +28,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div th:if="${session.auth != null}" class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
  	<ul>
  		<th:block th:if="${session.auth.grade == 'mem'}">
- 		<li>내정보 보기</li>
+ 		<li><a href="myPage/memberMyPage">내정보 보기</a></li>
  		<li>장바구니</li>
  		<li>관심목록</li>
  		<li>주문목록</li>
@@ -38,11 +38,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
  		<th:block th:if="${session.auth.grade == 'emp'}">
  		<li><a href="member/memberList">회원 관리</a></li>
  		<li><a href="employee/employeeList">직원 관리</a></li>
- 		<li>굿즈 관리</li>
+ 		<li><a href="goods/goodsList">굿즈 관리</a></li>
  		<li>주문 관리</li>
  		</th:block>
  		
- 		<li>로그아웃</li>
+ 		<li><a href="login/logout">로그아웃</a></li>
  	</ul>
   </div>
   <div th:if="${session.auth == null}" class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
