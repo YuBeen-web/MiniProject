@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>굿즈 리스트</title>
+<title>굿즈 판매 리스트</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -16,50 +16,25 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <body>
 <header class="w3-w3-bar w3-top w3-black w3-xlarge">
 	<div class="w3-bar-item w3-padding-24 w3-wide w3-center">
-		굿즈 관리
+		굿즈 판매 관리
 	</div>
 </header>
 
 <div class="w3-main" style="margin-left:250px">
 	<div class="w3-large" style="margin-top:83px"></div>
 	
-	<header class="w3-container w3-xlarge" style="margin-bottom:50px">
+	<header class="w3-container w3-xlarge">
+		<p class="w3-center"><a href="goodsWrite">굿즈 등록</a></p>
 	</header>
 	
 	<div class="w3-display-container w3-container">
-		<form action="goodsList" method="get" align="center">
-					검색 :  
-					<input type="search" name="searchWord" size="55" th:value="${searchWord}"/>
-					<input type="submit" value="검색"/>
-		</form>
 		<br/>
 		<table border="1" width="500" align="center" >
-			<tr><th>굿즈번호</th><th>상품명</th><th>가격</th><th>판매자</th></tr>
+			<tr><th>굿즈번호</th><th>상품명</th><th>가격</th></tr>
 			<tr th:each="dto : ${list}">
 				<th><a th:href="|goodsDetail?goodsNum=${dto.goodsNum}|">[[${dto.goodsNum}]]</a></th>
 				<th><a th:href="|goodsDetail?goodsNum=${dto.goodsNum}|">[[${dto.goodsName}]]</a></th>
 				<th>[[${dto.goodsPrice}]]</th>
-				<th><a th:href="|../member/memberDetail?memberNum=${dto.memberNum}|">[[${dto.memberNum}]]</a></th>
-			</tr>
-		
-			<tr>
-				<th colspan="4">
-					<th:block th:if="${page <= 1}">
-						[이전]
-					</th:block>
-					<th:block th:if="${page > 1}">
-						<a th:href="@{goodsList(page=${page-1},searchWord=${searchWord})}">[이전]</a>
-					</th:block>
-					<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-						<a th:href="@{goodsList(page=${i},searchWord=${searchWord})}">[[${i}]]</a>
-					</th:block>
-					<th:block th:if="${page >= maxPage}"> 
-						[다음]
-					</th:block>
-					<th:block th:if="${page < maxPage}">
-						<a th:href="@{goodsList(page=${page+1},searchWord=${searchWord})}">[다음]</a>
-					</th:block>
-				</th>
 			</tr>
 		</table>
 	</div>

@@ -45,4 +45,10 @@ public class MemberRepository {
 		statement = namespace + ".memberDelete";
 		return sqlSession.delete(statement, memberNum);
 	}
+	
+	public String memberNumSelect(String userId) {
+		statement = namespace + ".memberNumSelect";
+		return sqlSession.selectOne(statement, userId);
+	}
+	
 }

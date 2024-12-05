@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>굿즈 추가</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		var formData = new FormData($("#frm")[0]);
+		$.ajax({
+			type : "post",
+			url : "goodsWrite",
+			data : formData,
+			enctype : "multipart/form-data",
+			contentType : false,
+			processData : false,
+			success : function(result){
+				if(result == 200){
+					lotaion.href="goodsList";
+				}else{
+					$("#goodsForm").html(result);
+				}
+			},
+			error : function(){
+				alert("로그인을 다시 시도해 주세요.");
+				location.href="/";
+			}
+		})
+	})
+})
+</script>
+</head>
+<body>
+<header class="w3-w3-bar w3-top w3-black w3-xlarge">
+	<div class="w3-bar-item w3-padding-24 w3-wide w3-center">
+		굿즈 등록
+	</div>
+</header>
+
+<div class="w3-main" style="margin-left:250px">
+	<div class="w3-large" style="margin-top:83px"></div>
+	
+<header class="w3-container w3-xlarge">
+	<p class="w3-center"><a href="goodsSellList">뒤로가기</a></p>
+</header>
+
+<div class="w3-display-container w3-container">
+<form action="goodsWrite" method="post" id="frm" th:object="${goodsCommand}">
+<table width="600" border="1" align="center">
+	<tr><th>굿즈 고유번호</th>
+		<td><input type="text" name="goodsNum" th:value="${goodsCommand.goodsNum}" readonly="readonly"/></td>
+	</tr>
+	<tr><th>굿즈 이름</th>
+		<td><input type="text" name="goodsName" id="goodsName" th:value="${goodsCommand.goodsName}"></td>
+	</tr>
+	<tr><th>가격</th>
+		<td><input type="number" name="goodsPrice" th:value="${goodsCommand.goodsPrice}"></td>
+	</tr>
+	<tr><th>상세설명</th>
+		<td><textarea name="goodsContents"></textarea></td>
+	</tr>
+	<tr><th>굿즈 메인 이미지</th>
+		<td><input type="file" name="goodsMainImage"></td>
+	</tr>
+	<tr><th>굿즈 상세 이미지</th>
+		<td><input type="file" name="goodsDetailImage" multiple="multiple"></td>
+	</tr>
+	<tr><th colspan="2"><input type="button" id="btn" value="굿즈 등록"/></th></tr>
+</table>
+</form>
+</div>
+
+</div>
+</body>
+</html>

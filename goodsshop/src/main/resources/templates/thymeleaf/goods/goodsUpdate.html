@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>굿즈 수정</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.w3-sidebar a {
+	font-family: "Roboto", sans-serif
+}
+
+body, h1, h2, h3, h4, h5, h6, .w3-wide {
+	font-family: "Montserrat", sans-serif;
+}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+function fileDel(btn, orgFile, storeFile, kind){
+	$.ajax({
+		type:'post',
+		url:'/file/fileDel',
+		data:{"orgFile": orgFile, "storeFile" : storeFile},
+		dataType:'text',
+		success:function(result){
+			if(result == "1"){
+				$(btn).text("삭제취소");
+				if(kind=='main'){
+					$("#main").css("display","none");
+					$("#mainFile").html("<input type='file' name='goodsMainImage'/>");
+				}
+			}else{
+				$(btn).text("삭제");
+				if(kind=='main'){
+					$("#main").css("display","");
+					$("#mainFile").html("");
+				}
+			}
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	})
+}
+function fileChk(){
+	let fileInput = $("input[name='goodsMainImage']");
+	if(fileInput.length > 0 && !fileInput[0].files.length){
+		alert("파일을 선택해주세요.");
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<header class="w3-w3-bar w3-top w3-black w3-xlarge">
+	<div class="w3-bar-item w3-padding-24 w3-wide w3-center">굿즈 정보 수정
+	</div>
+</header>
+<div class="w3-main" style="margin-left: 250px">
+	<div class="w3-large" style="margin-top: 83px"></div>
+
+	<header class="w3-container w3-xlarge">
+			<div th:if="${session.auth.grade == 'emp'}"  class="w3-center">
+				<a th:href="|goodsDetail?goodsNum=${goodsCommand.goodsNum}|">뒤로가기</a>
+			</div>
+			<div th:if="${session.auth.grade == 'mem'}"  class="w3-center">
+				<a th:href="|goodsDetail?goodsNum=${goodsCommand.goodsNum}">뒤로가기</a>
+			</div>
+	</header>
+
+	<div class="w3-display-container w3-container">
+		<form action="goodsUpdate" method="post" name="frm" id="frm" 
+				th:object="${goodsCommand}" enctype="multipart/form-data" onsubmit="return fileChk();">
+		<table border="1" width="500" align="center">
+			<tr>
+				<th>굿즈 고유번호</th>
+				<td><input type="text" name="goodsNum" th:value="${goodsCommand.goodsNum}"/></td>
+			</tr>
+			<tr>
+				<th>굿즈 이름</th>
+				<td><input type="text" name="goodsName" th:value="${goodsCommand.goodsName}"/></td>
+			</tr>
+			<tr>
+				<th>가격</th>
+				<td><input type="number" name="goodsPrice" th:value="${goodsCommand.goodsPrice}"/></td>
+			</tr>
+			<tr>
+				<th>상세 설명</th>
+				<td><textarea rows="10" cols="30" name="goodsContents">[[${goodsCommand.goodsContents}]]</textarea></td>
+			</tr>
+			<tr>
+				<th>메인 이미지 </th>
+				<td><span id="mainFile"></span>
+					<span id="main">[[${goodsCommand.goodsMainStoreImage}]]</span>
+					<button type="button" 
+							th:attr="onclick=|javascript:fileDel(this, '${goodsCommand.goodsMainImage}', '${goodsCommand.goodsMainStoreImage}','main');|">
+						삭제
+					</button>
+				</td>
+			</tr>
+			<tr>
+				<th>상세 이미지 </th>
+				<td>
+					<div th:each="image, idx : ${#strings.arraySplit(goodsCommand.goodsDetailImage,'[`/]')}">
+						[[${image}]]
+						<button type="button" 
+								th:attr="onclick=|javascript:fileDel(this, '${image}'
+													, '${#strings.arraySplit(goodsCommand.goodsDetailStoreImage,'[`/]')},[idx.index]);|"> 삭제 </button>
+					</div>	
+					<input type="file" name="goodsDetailImage" multiple="multiple"/>		
+				</td>
+			</tr>
+			<tr><th colspan="2">
+					<input type="submit" value="수정 완료"/>
+				</th></tr>
+		</table>
+		</form>
+	</div>
+</div>
+</body>
+</html>

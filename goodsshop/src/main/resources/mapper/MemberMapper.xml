@@ -60,4 +60,9 @@
 	<delete id="memberDelete" parameterType="string">
 		delete from members where member_num = #{memberNum}
 	</delete>
+	
+	<select id="memberNumSelect" parameterType="string" resultType="string">
+		select member_num from members
+		where member_id = #{userId}
+	</select>
 </mapper>

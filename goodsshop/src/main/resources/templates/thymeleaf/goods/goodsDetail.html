@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>굿즈 상세보기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.w3-sidebar a {
+	font-family: "Roboto", sans-serif
+}
+
+body, h1, h2, h3, h4, h5, h6, .w3-wide {
+	font-family: "Montserrat", sans-serif;
+}
+</style>
+</head>
+<body>
+<header class="w3-w3-bar w3-top w3-black w3-xlarge">
+	<div class="w3-bar-item w3-padding-24 w3-wide w3-center">굿즈 상세보기
+	</div>
+</header>
+<div class="w3-main" style="margin-left: 250px">
+	<div class="w3-large" style="margin-top: 83px"></div>
+
+	<header class="w3-container w3-xlarge">
+			<div th:if="${session.auth.grade == 'emp'}"  class="w3-center">
+				<a href="goodsList">뒤로가기</a>
+			</div>
+			<div th:if="${session.auth.grade == 'mem'}"  class="w3-center">
+				<a href="goodsSellList">뒤로가기</a>
+			</div>
+		<p class="w3-center">
+			<a th:href="|goodsModify?goodsNum=${goodsCommand.goodsNum}|">수정</a> | 
+			<a th:href="|goodsDelete?goodsNum=${goodsCommand.goodsNum}|">삭제</a>
+		</p>
+	</header>
+
+	<div class="w3-display-container w3-container">
+		<table border="1" width="500" align="center">
+			<tr>
+				<th>굿즈 고유번호</th>
+				<td>[[${goodsCommand.goodsNum}]]</td>
+			</tr>
+			<tr>
+				<th>굿즈 이름</th>
+				<td>[[${goodsCommand.goodsName}]]</td>
+			</tr>
+			<tr>
+				<th>가격</th>
+				<td>[[${goodsCommand.goodsPrice}]]</td>
+			</tr>
+			<tr>
+				<th>상세 설명</th>
+				<td>[[${goodsCommand.goodsContents}]]</td>
+			</tr>
+			<tr>
+				<th>조회수</th>
+				<td>[[${goodsCommand.visitCount}]]</td>
+			</tr>
+			<tr>
+				<th>굿즈 등록일</th>
+				<td>[[${#dates.format(goodsCommand.goodsRegist,'yyyy-MM-dd')}]]</td>
+			</tr>
+			<tr>
+				<th colspan="2">메인 이미지 <br/>
+				<img th:src="|/static/upload/${goodsCommand.goodsMainStoreImage}|"/></th>
+			</tr>
+			<tr>
+				<th colspqn="2">상세 이미지 <br/>
+				<th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsDetailStoreImage,'[`/]')}">
+					<img th:src="|/static/upload/${image}|"/><br/>
+				</th:block></th>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
